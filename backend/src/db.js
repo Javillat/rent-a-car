@@ -11,8 +11,10 @@ const app = initializeApp({
     credential: credential.cert(serviceAccount),
     databaseURL:DATABASE_URL,
 });
+console.log(app);
 
 //Inicializar base de datos en tiempo real y obtener la referencia al servicio.
 const db = getFirestore();
+console.log(db);
 
 module.exports = db;
