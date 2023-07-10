@@ -10,7 +10,8 @@ const server = express();
 
 server.name = 'API';
 
-server.use(bodyParser.urlencoded({extended: true, limit: '50mb'}));
+//middlewares
+server.use(bodyParser.urlencoded({extended: false}));
 server.use(bodyParser.json()); // parse application/json
 server.use(morgan('dev'));
 /**
