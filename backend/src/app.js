@@ -1,7 +1,9 @@
 //Requerir express
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const routes = require('../src/routes/index');
 
 //require('./db.js')
 const URLORIGIN = process.env.URLORIGIN;
@@ -29,6 +31,7 @@ server.use((req, res, next) => {
     return next();
 });
 
+server.use('/', routes);
 //Si ocurre algun error tomarlo acá, procesar el stack y mostrarlo.
 server.use((err, req, res, next) => {
     console.error(`Error ${res.statusCode || 500}:`, err.stack);
