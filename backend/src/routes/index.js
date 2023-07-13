@@ -6,7 +6,7 @@ const routerMain = Router();
 
 //routerMain.use('/', routerUsers); 
 routerMain.use('/cars', routerCars);
-console.log('routermain');
+//console.log('routermain');
 
 
 module.exports = routerMain;
