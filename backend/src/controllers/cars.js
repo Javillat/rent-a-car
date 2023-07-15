@@ -10,9 +10,14 @@ addCar = async (req, res) => {
         console.log(carData);
         if (carData) {
             await docRef.add({
+                imagen:carData.imagen,
                 marca: carData.marca,
+                modelo: carData.modelo,
+                trasmision: carData.trasmision,
                 color: carData.color,
                 anyo: carData.anyo,
+                disponible: carData.disponible,
+                preciobase:carData.parseInt(preciobase),
             });
             res.status(201).json({ message: "Nuevo Carro Agregado" });
         } else {
