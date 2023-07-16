@@ -24,3 +24,5 @@ addUser = async (req, res) => {
         console.error("Error al crear el usuario: ", error.message);
     };
 }
+
+module.exports = addUser;
