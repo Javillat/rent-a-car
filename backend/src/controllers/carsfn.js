@@ -3,6 +3,10 @@
 const db = require("../db");
 const Car = require('../models/car');
 
+/**
+ * Agregar un auto a la coleccion.
+ */
+
 addCar = async (req, res) => {
 
     const carData = req.body;
@@ -15,30 +19,14 @@ addCar = async (req, res) => {
             newCar = await Car(carData)
             return res.send(201, `Se creó el auto con id ${newCar}, correctamente.`);
         }
-        // result = await newCar.save()
-
-        //     console.log(carData);
-        //     if (carData) {
-        //         await docRef.add({
-        //             imagen:carData.imagen,
-        //             marca: carData.marca,
-        //             modelo: carData.modelo,
-        //             trasmision: carData.trasmision,
-        //             color: carData.color,
-        //             anyo: carData.anyo,
-        //             disponible: carData.disponible,
-        //             preciobase:carData.parseInt(preciobase),
-        //         });
-        //         res.status(201).json({ message: "Nuevo Carro Agregado" });
-        //     } else {
-        //         throw 'No hay datos en el body';
-        //     }
-
     } catch (error) {
         console.error('Error agregando el nuevo carro!', error.message);
     }
 }
 
+/**
+ * Obtener todos los autos/documentos de la coleccion.
+ */
 getCars = async (req, res) => {
     let carsList = [];
     try {
@@ -58,7 +46,28 @@ getCars = async (req, res) => {
     };
 }
 
+/**
+ * Obtener un auto por id
+ */
+
+getCarById = async (req, res) => {
+    const { id } = req.params;
+    console.log('Cars id ',id);
+    try{
+        const carDoc = db.collection("cars").doc(id);
+        const carsSnapshot = await carDoc.get();
+        if(!carsSnapshot.exists){
+            throw new Error("El auto no existe");
+        }else{
+            return res.status(200).json({id:carsSnapshot.id, ...carsSnapshot.data()})
+        }
+    }catch(error){
+        console.log(`Hubo un problema al obtener el auto con id ${id}`, error.message);
+    }
+}
+
 module.exports = {
     addCar,
     getCars,
+    getCarById,
 }
