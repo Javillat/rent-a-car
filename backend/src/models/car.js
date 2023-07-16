@@ -1,4 +1,7 @@
 //const admin = require('firebase-admin');
+/**
+ * Modelo Car, prepara una colección de autos.
+ */
 
 const db = require('../db');
 
