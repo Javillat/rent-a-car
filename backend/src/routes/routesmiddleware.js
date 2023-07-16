@@ -11,6 +11,7 @@ routerMiddleware = express.Router();
 routerMiddleware.post('/newcar', cars.addCar);
 routerMiddleware.get('/getcars', cars.getCars);
 routerMiddleware.get('/:id', cars.getCarById);
+routerMiddleware.delete('/delete/:id', cars.deleteCar) ;
 //middleware users
 routerMiddleware.post('/newuser', users.addUser);
 
