@@ -25,4 +25,6 @@ addUser = async (req, res) => {
     };
 }
 
-module.exports = addUser;
+module.exports = {    
+    addUser
+};
