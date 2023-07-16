@@ -8,7 +8,7 @@ Rental = async(rentalData) => {
     try{
         rentalRef = db.collection("rental").doc();
         await rentalRef.set(rentalData);
-        return rentalData.id;
+        return rentalRef.id;
     }catch(error){
         console.error(error.message);
     };
