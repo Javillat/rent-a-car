@@ -10,6 +10,7 @@ routerMiddleware = express.Router();
 //middleware cars
 routerMiddleware.post('/newcar', cars.addCar);
 routerMiddleware.get('/getcars', cars.getCars);
+routerMiddleware.get('/:id', cars.getCarById);
 //middleware users
 routerMiddleware.post('/newuser', users.addUser);
 
