@@ -7,6 +7,7 @@ const routerMain = Router();
 //routerMain.use('/', routerUsers); 
 routerMain.use('/cars', routerMiddleware);
 routerMain.use('/users', routerMiddleware);
+routerMain.use('/rental', routerMiddleware);
 //console.log('routermain');
 
 
