@@ -2,7 +2,7 @@ const express = require('express');
 const cars = require('../controllers/carsfn.js');
 const users = require('../controllers/usersfn.js');
 
-// Router for /cars/ endpoint
+// Router middleware endpoint
 routerMiddleware = express.Router();
 
 //middleware cars
