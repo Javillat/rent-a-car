@@ -52,22 +52,40 @@ getCars = async (req, res) => {
 
 getCarById = async (req, res) => {
     const { id } = req.params;
-    console.log('Cars id ',id);
-    try{
+    //console.log('Cars id ',id);
+    try {
         const carDoc = db.collection("cars").doc(id);
         const carsSnapshot = await carDoc.get();
-        if(!carsSnapshot.exists){
+        if (!carsSnapshot.exists) {
             throw new Error("El auto no existe");
-        }else{
-            return res.status(200).json({id:carsSnapshot.id, ...carsSnapshot.data()})
-        }
-    }catch(error){
+        } else {
+            return res.status(200).json({ id: carsSnapshot.id, ...carsSnapshot.data() })
+        };
+    } catch (error) {
         console.log(`Hubo un problema al obtener el auto con id ${id}`, error.message);
+    };
+};
+
+/**
+ * Eliminar un auto desde firestore.
+ */
+
+deleteCar = async (req, res) => {
+    let { id } = req.params;
+    try {
+        let findDoc;
+        // Buscar documento a eliminar en la colección "cars" y guardar su id
+        findDoc = db.collection("cars").doc(id);
+        const carsSnapshot = await findDoc.get();
+        (carsSnapshot.exists) ? deleteDoc = await findDoc.delete() & res.sendStatus(200) : res.sendStatus(404, `No se encontró el auto con id ${id}`);
+    } catch (error) {
+        console.error(error.message);
     }
-}
+};
 
 module.exports = {
     addCar,
     getCars,
     getCarById,
+    deleteCar,
 }
