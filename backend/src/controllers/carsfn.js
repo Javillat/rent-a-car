@@ -83,9 +83,30 @@ deleteCar = async (req, res) => {
     }
 };
 
+/**
+ * Actualizar campos en firestore en la collection cars
+ */
+updateCar = async (req, res) => {
+    let { id } = req.params;
+    let bodyData = JSON.parse(JSON.stringify(req.body));
+
+    try {
+        findDoc = db.collection('cars').doc(id);
+        await findDoc.update(bodyData);
+        res.sendStatus(200);
+    } catch (error) {
+        console.error(error.message);
+    }
+    
+
+
+};
+
+// Exportamos las funciones
 module.exports = {
     addCar,
     getCars,
     getCarById,
     deleteCar,
+    updateCar,
 }
