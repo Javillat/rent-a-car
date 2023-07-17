@@ -12,6 +12,8 @@ routerMiddleware.post('/newcar', cars.addCar);
 routerMiddleware.get('/getcars', cars.getCars);
 routerMiddleware.get('/:id', cars.getCarById);
 routerMiddleware.delete('/delete/:id', cars.deleteCar) ;
+routerMiddleware.put('/update/:id', cars.updateCar);
+
 //middleware users
 routerMiddleware.post('/newuser', users.addUser);
 
