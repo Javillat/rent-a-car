@@ -17,6 +17,6 @@ const app = admin.initializeApp({
 
 //Inicializar base de datos en tiempo real y obtener la referencia al servicio.
 const db = getFirestore(app);
-console.log(db);
+//console.log(db);
 
 module.exports = db;

@@ -15,7 +15,7 @@ routerMiddleware.delete('/delete/:id', cars.deleteCar) ;
 routerMiddleware.put('/update/:id', cars.updateCar);
 
 //middleware users
-routerMiddleware.post('/newuser', users.addUser);
+routerMiddleware.post('/signup', users.addUser);
 
 //middleware rental
 routerMiddleware.post('/newrental', rental.addRentals);
