@@ -1,5 +1,5 @@
 //const { addDoc, collection } = require("firebase-admin");
-
+const admin = require('firebase-admin');
 const db = require("../db");
 const Car = require('../models/car');
 
