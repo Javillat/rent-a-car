@@ -13,18 +13,17 @@ addUser = async (req, res) => {
     const {email, password} = req.body;
 
     try {
-        const credencial = await firebase.auth().createUser({email, password});
-        console.log(credencial);
-        res.sendStatus(201);
-        //Crea una nueva instancia del modelo user con los datos recibidos en req.body
-        // if (Object.keys(userData).length === 0) {
-        //     return res.sendStatus(204);
-        // } else {
-        //     let newUser = await User({ ...userData });
-        //     return res.send(201, `Se creó el usuario con id ${newUser}, correctamente.`);
-        // }
+        if(email && password){
+            const credencial = await firebase.auth().createUser({email, password});
+            //console.log(credencial);
+            res.sendStatus(201);
+        }else{
+            res.status(204).send("Los campos no pueden estar vacios");
+        }
     } catch (error) {
-        console.error("Error al crear el usuario: ", error.message, error.code);
+
+        //console.error("Error al crear el usuario: ", error.message, error.code);
+        return res.status(400).send(error);
     };
 }
 
