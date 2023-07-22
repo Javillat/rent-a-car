@@ -16,6 +16,7 @@ routerMiddleware.put('/update/:id', cars.updateCar);
 
 //middleware users
 routerMiddleware.post('/signup', users.addUser);
+routerMiddleware.post('/login', users.signinUser); // login user and return
 
 //middleware rental
 routerMiddleware.post('/newrental', rental.addRentals);
