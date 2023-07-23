@@ -21,6 +21,7 @@ routerMiddleware.put('/logout', users.signoutUser);
 
 //middleware rental
 routerMiddleware.post('/:carId', users.authenticate, rental.addRentals);
+routerMiddleware.post('/return/:rentalId', users.authenticate, rental.addReturnCar);
 
 
 module.exports = routerMiddleware;
