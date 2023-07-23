@@ -10,8 +10,11 @@ const Rental = require('../models/rental');
 addRentals = async (req, res) => {
 
     try {
-        //Crea una nueva instancia del modelo rental con los datos recibos por body
-        //const rentalData = req.body;
+        /**
+         * Crea una nueva instancia del modelo rental con los datos recibos por params/middleware authenticate
+         * agregando una nueva renta.
+         */
+
         const carId = req.params.carId;
         const userId = req.user.uid;
 
@@ -49,9 +52,49 @@ addRentals = async (req, res) => {
 };
 
 /**
+ * Agrega una nueva devolucion del auto alquilado con anterioridad.
  * 
  */
 
+addReturnCar = async(req, res) => {
+    try{
+        const rentalId = req.params.rentalId;
+        const userId = req.user.uid;
+
+        //Verificar si el alquiler pertenece al usuario autenticado.
+        const rentalRef = db.collection('rental').doc(rentalId);
+        const rentalDoc = await rentalRef.get();
+        if(!rentalDoc.exists){
+            return res.status(404).json({error:'El alquiler no existe.'});
+        }
+        if(rentalDoc.data().userId !== userId){
+            return res.status(403).json({error:"No tienes permiso para devolver este auto"});
+        }
+
+        //Verificar si el alquiler ya ha sido completado (devuelto)
+        if(rentalDoc.data().completed === true ){
+            return res.status(409).json({error:'Este alquiler ya está devuelto'});
+        }
+
+        //Marcar el alquiler como completado y guardar la fecha de devolucion.
+        await rentalRef.update({
+            returnDate:FieldValue.serverTimestamp(),
+            completed :true
+        });
+
+        //Marcar el auto como disponible nuevamente
+        let carId = rentalDoc.data().carId;
+        let carRef = db.collection('cars').doc(carId);
+        await carRef.update({available: true});
+
+        res.json({message: 'Devolucion del auto realizada con exito.'});
+    }catch(error){
+        console.log('Error en la devolucion del auto');
+        res.status(500).json({error: 'Error al realizar la devolucion del auto.'});
+    };
+}
+
 module.exports = {
     addRentals,
+    addReturnCar,
 }
