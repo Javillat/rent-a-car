@@ -8,20 +8,21 @@ const rental = require("../controllers/rentalfn.js");
 routerMiddleware = express.Router();
 
 //middleware cars
-routerMiddleware.post('/newcar', users.authenticate, cars.addCar);
-routerMiddleware.get('/getcars', cars.getCars);
-routerMiddleware.get('/:id', cars.getCarById);
-routerMiddleware.delete('/delete/:id', cars.deleteCar) ;
-routerMiddleware.put('/update/:id', cars.updateCar);
+routerMiddleware.post('/newcar', cars.addCar);          // Agregar un nuevo auto
+routerMiddleware.get('/getcars', cars.getCars);         // Obtener todos los autos
+routerMiddleware.get('/getcar/:id', cars.getCarById);   // Obtener un auto por su Id
+routerMiddleware.delete('/delete/:id', cars.deleteCar); // Eliminar un auto
+routerMiddleware.put('/update/:id', cars.updateCar);    // Actualizar un auto
 
 //middleware users
-routerMiddleware.post('/signup', users.addUser);
-routerMiddleware.post('/login', users.signinUser); // login user and return
-routerMiddleware.put('/logout', users.signoutUser);
+routerMiddleware.post('/signup', users.addUser);   // Registrar usuario
+routerMiddleware.post('/login', users.signinUser); // loguear usuario
+routerMiddleware.put('/logout', users.signoutUser);// Desloguear usuario
 
 //middleware rental
-routerMiddleware.post('/:carId', users.authenticate, rental.addRentals);
-routerMiddleware.post('/return/:rentalId', users.authenticate, rental.addReturnCar);
+routerMiddleware.post('/:carId', users.authenticate, rental.addRentals);                // Agregar una renta
+routerMiddleware.post('/return/:rentalId', users.authenticate, rental.addReturnCar);    // Rerornar un auto
+routerMiddleware.get('/allrental', rental.getRentalList);                               // Obtener autos rentados
 
 
 module.exports = routerMiddleware;
