@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const User = require("../models/user");
 const { getAuth, signOut } = require("firebase-admin/auth")
 const jwt = require('jsonwebtoken');
+const { SECRET } = process.env;
 
 
 /**
@@ -49,7 +50,7 @@ authenticate = async (req, res, next) => {
             return res.status(403).json({ message: "Acceso prohibido!" });
         }else {
             const token = authorization.split(' ')[1];
-            jwt.verify(token, "secret_word", (err, data) => {
+            jwt.verify(token, SECRET, (err, data) => {
                 if(!data || err){
                     res.status(401).json({message:'Error de autenticación!'})
                 }else{
@@ -88,7 +89,7 @@ signinUser = async (req, res) => {
                 return res.status(401).json({ error: "Credenciales invalidas" });
             } else {
                 //const tokenUser = await auth.createCustomToken(user.uid);
-                const tokenUser = jwt.sign({email:user.email, uid:user.uid}, "secret_word");
+                const tokenUser = jwt.sign({email:user.email, uid:user.uid}, SECRET, {expiresIn:"1h"});
                 console.log('userToken', tokenUser);
                 return res.status(200).json({ tokenUser });
             }
