@@ -17,7 +17,7 @@ addCar = async (req, res) => {
             return res.sendStatus(204);
         } else {
             newCar = await Car(carData)
-            return res.send(201, `Se creó el auto con id ${newCar}, correctamente.`);
+            return res.send(200, `Se creó el auto con id ${newCar}, correctamente.`);
         }
     } catch (error) {
         console.error('Error agregando el nuevo carro!', error.message);
