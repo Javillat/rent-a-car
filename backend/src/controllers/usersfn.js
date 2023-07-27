@@ -2,8 +2,8 @@
 const admin = require('firebase-admin');
 const bcrypt = require('bcrypt');
 const User = require("../models/user");
-const { getAuth } = require("firebase-admin/auth")
-//console.log(signInWithEmailAndPassword);
+const { getAuth, signOut } = require("firebase-admin/auth")
+const jwt = require('jsonwebtoken');
 
 
 /**
@@ -15,11 +15,11 @@ addUser = async (req, res) => {
 
     try {
         const { email, password, phoneNumber, displayName, photoURL, disabled } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
+        //const hashedPassword = await bcrypt.hash(password, 10);
         if (email && password) {
             const credencial = await admin.auth().createUser({
                 email,
-                password: hashedPassword,
+                password,
                 phoneNumber,
                 displayName,
                 photoURL: photoURL || "https://www.citypng.com/photo/20794/free-round-flat-male-portrait-avatar-user-icon-png",
@@ -38,6 +38,36 @@ addUser = async (req, res) => {
 }
 
 /**
+ * Middleware para autenticar al usuario mediante las rutas protegidas.
+ */
+authenticate = async (req, res, next) => {
+    try {
+        const auth = getAuth();
+        const { authorization } = req.headers;
+        console.log('Autorizacion ',authorization);
+        if (!authorization || !authorization.startsWith('Bearer ')) {
+            return res.status(403).json({ message: "Acceso prohibido!" });
+        }else {
+            const token = authorization.split(' ')[1];
+            jwt.verify(token, "secret_word", (err, data) => {
+                if(!data || err){
+                    res.status(401).json({message:'Error de autenticación!'})
+                }else{
+                    console.log('Datos del usuario ', data);
+                    //res.json({data:data})
+                    next();
+                };
+            });
+            //const decodeToken = await auth.verifyIdToken(token);
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(403).json({ message: "Acceso prohibido" });
+    };
+
+};
+
+/**
  * Hacer login al usuario y manejar errores. 
  */
 
@@ -48,27 +78,22 @@ signinUser = async (req, res) => {
         const auth = getAuth();
         const { email, password } = req.body;
 
-        const user = await auth.getUserByEmail(email, password);
+        //const user =  await auth.getUserByEmail(email,password);
+        const user = await auth.getUserByEmail(email);
         console.log("Resultado user", user.uid)
-        //const isPasswordCorrect = await bcrypt.compare(password, user.passwordHash);
-        //console.log(isPasswordCorrect);
-        //.then(() => {
-        //console.log("Compare result ", isPasswordCorrect);
-        //if(!isPasswordCorrect){
-        const tokenUser = await auth.createCustomToken(user.uid);
-        //console.log('Token ', tokenUser);
-        return res.status(200).json({ tokenUser });
-        //return res.status(401).json({error: "Credenciales invalidas"});
-        //}else{
+        console.log('Lo que tiene user', user);
+        //const isPasswordCorrect = bcrypt.compare(password, user.passwordHash || '');
+        bcrypt.compare(password, user.passwordHash, async function (err, result) {
+            if (!result && err == null) {
+                return res.status(401).json({ error: "Credenciales invalidas" });
+            } else {
+                //const tokenUser = await auth.createCustomToken(user.uid);
+                const tokenUser = jwt.sign({email:user.email, uid:user.uid}, "secret_word");
+                console.log('userToken', tokenUser);
+                return res.status(200).json({ tokenUser });
+            }
+        });
     }
-
-    //const token = await signin.user.getIdToken();
-    //console.log(`Usuario ${signin.user.displayName}, ha iniciado sesión, con token ${token}`);
-
-    // }else{
-    //     res.status(204).json({error:"Los campos no pueden estar vacios"});
-    // }
-
     catch (error) {
         //console.log(error.message, error.code);
         return res.status(400).json({ Mensaje: error.message, Error: error.code });
@@ -76,7 +101,22 @@ signinUser = async (req, res) => {
 
 };
 
+/**
+ * Desloguear al usuario.
+ */
+
+signoutUser = async () => {
+    try {
+        const auth = getAuth();
+        signOut(auth);
+    } catch (error) {
+        console.log(error.message);
+    }
+};
+
 module.exports = {
     addUser,
+    authenticate,
     signinUser,
+    signoutUser,
 };
