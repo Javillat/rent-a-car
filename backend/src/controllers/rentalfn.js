@@ -94,7 +94,31 @@ addReturnCar = async(req, res) => {
     };
 }
 
+/**
+ * Obtener la lista de autos rentados.
+ */
+getRentalList =  async (req, res) => {
+    const carRented = [];
+    try{
+        const availableRef = db.collection('cars');
+        const snapshot = await availableRef.where('available', '==', false).get();
+        if(snapshot.empty){
+            console.log('No hay autos alquilados');
+            return res.json({message: 'No hay autos rentados'});
+        }
+        snapshot.forEach(doc => {
+            console.log(doc.id, '=>', doc.data() );
+            carRented.push(doc.data());
+        });
+        return res.status(200).json({'rentals': carRented});
+    }catch(error){
+        console.log(error);
+    }
+}
+
+//Funciones exportadas
 module.exports = {
     addRentals,
     addReturnCar,
+    getRentalList,
 }
