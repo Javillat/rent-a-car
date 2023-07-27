@@ -18,7 +18,7 @@ addRentals = async (req, res) => {
         const carId = req.params.carId;
         const userId = req.user.uid;
 
-        if (Object.keys(carId).length === 0) {
+        if (Object.keys(carId).length === 0) { //MODIFICAR
             return res.sendStatus(204);
         } else {
             //Verficar si el auto esta disponible para alquiler
@@ -43,7 +43,7 @@ addRentals = async (req, res) => {
             //let rentalId = newRentalData.id;
             //Actualizar estado del auto a ocupado y guardar cambios en base de datos.
             await carRef.update({available:false});
-            return res.status(201).json({message:`Se creó la renta con id ${newRentalData}, correctamente`});
+            return res.status(200).json({message:`Se creó la renta con id ${newRentalData}, correctamente`});
         };
     } catch (error) {
         console.error("Error al agregar la renta: ", error.message);
