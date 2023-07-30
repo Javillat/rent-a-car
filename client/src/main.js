@@ -9,7 +9,7 @@ import Vuex from 'vuex';
 
 import RegisterComponent from './components/RegisterComponent.vue';
 import LoginComponent from './components/LoginComponent.vue';
-import LogoutComponent from './components/LogoutComponent.vue';
+// import LogoutComponent from './components/LogoutComponent.vue';
 import HomeComponent from './components/HomeComponent.vue';
 import CarsComponent from './components/CarsComponent.vue';
 import CarDetailsComponent from './components/CarDetailsComponent.vue';
@@ -29,11 +29,11 @@ const routes = [
   {path: '/', component: HomeComponent},
   {path: '/login', component: LoginComponent},
   {path: '/register', component: RegisterComponent},
-  {path: '/logout', component: LogoutComponent},
   {path: '/car', component: CarsComponent},
   {path: '/car/detail', component: CarDetailsComponent},
   {path: '/rent/:carId', component: RentalComponent},
   {path: '/return/:rentalId', component: ReturnComponent}
+  // {path: '/logout', component: LogoutComponent},
 ];
 
 const router = new VueRouter({
