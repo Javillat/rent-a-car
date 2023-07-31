@@ -2,9 +2,9 @@
     <div>
         <h2>Lista de autos disponibles</h2>
         <ul>
-            <li v-for="car in cars" :key="car.carId">
-                {{ car.marca }} {{ car.modelo }} ( Año {{ car.anyo }} ) (Precio por día {{ car.precio }})
-                <button @click="rentCar(car.Id)">Alquilar</button>
+            <li v-for="car in cars" :key="car.id">
+               {{ car.id }} - {{ car.marca }} - {{ car.tipo }} ( Año {{ car.año }} )
+                <button @click="rentCar(car.id)">Alquilar</button>
             </li>
         </ul>
     </div>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'Autos',
+  name: 'Cars',
   data: () => ({
     // Lista con los datos del auto.
     cars: []
@@ -20,10 +20,12 @@ export default {
   methods: {
     rentCar (carId) { // Función para alquilar el vehículo seleccionado.
       // Obtener el iDToken almacenado para incluirlo en la solicitud
-      const idToken = localStorage.getItem('idToken')
+      console.log('CarId ', carId)
+      const idToken = localStorage.getItem('token')
+      console.log(idToken)
 
       this.$http
-        .post(`/rents/${carId}`, null, {
+        .post(`/rental/${carId}`, null, {
           headers: { Authorization: `Bearer ${idToken}` }
         })
         .then(() => {
@@ -36,8 +38,14 @@ export default {
         })
     },
     fetchCars () {
+      const idToken = localStorage.getItem('token')
+      // const uid = localStorage.getItem('uid')
+      console.log('Token storage ', idToken)
       this.$http
-        .get('/cars/')
+        .get('/cars/getcars', {
+          headers: { Authorization: `Bearer ${idToken}` }
+
+        })
         .then(response => {
           this.cars = response.data
         })
