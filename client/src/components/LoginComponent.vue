@@ -1,5 +1,6 @@
 <!-- eslint-disable no-tabs -->
 <!-- eslint-disable indent -->
+
 <template>
 	<div>
 		<h2>Iniciar Sesión</h2>
@@ -27,12 +28,14 @@ export default {
   methods: {
     async login () {
       this.$http
-        .post('/login', {
+        .post('/users/login', {
           email: this.email,
           password: this.password
         })
         .then(response => {
-          const idToken = response.data.idToken
+          // console.log('Response ', response)
+          const idToken = response.data.tokenUser
+          // console.log('Token ', idToken)
 
           // Guardo el idToken en el localStorage
           localStorage.setItem('token', idToken)
@@ -40,8 +43,8 @@ export default {
           // Actualizar el estado de autenticacion
           this.$store.commit('SET_AUTH', { isloggedIn: true, idToken })
 
-          // Redirigir al inicio
-          this.$VueRouter.push('/')
+          // Redirigir al componente cars
+          this.$router.push('/car')
         })
         .catch(error => {
           console.log('Error:', error)
