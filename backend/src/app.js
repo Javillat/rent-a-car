@@ -20,7 +20,7 @@ server.use(morgan('dev'));
  * Permitir multiples origenes en la peticion hacia la API.
  */
 server.use((req, res, next) => { 
-    const allowedOrigins = ['http://localhost:3000', URLORIGIN];
+    const allowedOrigins = ['http://localhost:8080', URLORIGIN];
     let origin = req.headers['origin'] || '';
     if (allowedOrigins && allowedOrigins.includes(origin)){
         res.setHeader('Access-Control-Allow-Origin', origin);
