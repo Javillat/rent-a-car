@@ -30,11 +30,12 @@ addCar = async (req, res) => {
 getCars = async (req, res) => {
     let carsList = [];
     try {
-        const carsSnapshot = await db.collection('cars').get();
-        //for (let i=0 ;i<carsSnapshot.docs.length; i++){}
+        const availableRef = db.collection('cars');
+        const carsSnapshot = await availableRef.where('available', '==', true).get();
+        
         if (!carsSnapshot.empty) {
             carsSnapshot.forEach(doc => {
-                carsList.push(doc.data());
+                carsList.push({id:doc.id, marca: doc.data().marca, tipo: doc.data().tipo, color: doc.data().color, disponible: doc.data().available, año: doc.data().anyo});
             });
             console.log('Lista de autos ', carsList);
             return res.status(200).json(carsList)
