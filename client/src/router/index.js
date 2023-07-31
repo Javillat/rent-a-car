@@ -6,7 +6,7 @@ import LoginComponent from '../components/LoginComponent.vue'
 // import LogoutComponent from '../components/LogoutComponent.vue';
 import HomeComponent from '../components/HomeComponent.vue'
 import CarsComponent from '../components/CarsComponent.vue'
-// import CarDetailsComponent from '../components/CarDetailsComponent.vue';
+import CarDetailsComponent from '../components/CarDetailsComponent.vue'
 import RentalComponent from '../components/RentalComponent.vue'
 import ReturnComponent from '../components/ReturnComponent.vue'
 
@@ -29,10 +29,25 @@ export default new Router({
       path: '/car',
       name: 'Car',
       component: CarsComponent},
-    // {path: '/car/detail', component: CarDetailsComponent},
-    {path: '/rent/:carId', component: RentalComponent},
-    {path: '/return/:rentalId', component: ReturnComponent},
-    {path: '/', name: 'Home', component: HomeComponent}
+    {path: '/car/detail',
+      name: 'CarDetail',
+      component: CarDetailsComponent
+    },
+    {
+      path: '/rent/:carId',
+      name: 'Rental',
+      component: RentalComponent
+    },
+    {
+      path: '/return/:rentalId',
+      name: 'Return',
+      component: ReturnComponent
+    },
+    {
+      path: '/',
+      name: 'Home',
+      component: HomeComponent
+    }
   // {path: '/logout', component: LogoutComponent},
   ]
 })
