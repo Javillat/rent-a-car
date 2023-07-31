@@ -55,7 +55,7 @@ authenticate = async (req, res, next) => {
                     res.status(401).json({message:'Error de autenticación!'})
                 }else{
                     console.log('Datos del usuario ', data);
-                    //res.json({data:data})
+                    req.user = data;
                     next();
                 };
             });
@@ -81,8 +81,8 @@ signinUser = async (req, res) => {
 
         //const user =  await auth.getUserByEmail(email,password);
         const user = await auth.getUserByEmail(email);
-        console.log("Resultado user", user.uid)
-        console.log('Lo que tiene user', user);
+        //console.log("Resultado user", user.uid)
+        //console.log('Lo que tiene user', user);
         //const isPasswordCorrect = bcrypt.compare(password, user.passwordHash || '');
         bcrypt.compare(password, user.passwordHash, async function (err, result) {
             if (!result && err == null) {
@@ -90,8 +90,8 @@ signinUser = async (req, res) => {
             } else {
                 //const tokenUser = await auth.createCustomToken(user.uid);
                 const tokenUser = jwt.sign({email:user.email, uid:user.uid}, SECRET, {expiresIn:"1h"});
-                console.log('userToken', tokenUser);
-                return res.status(200).json({ tokenUser });
+               // console.log('userToken', tokenUser);
+                return res.status(200).json({ tokenUser: tokenUser, uid:user.uid });
             }
         });
     }
