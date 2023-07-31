@@ -33,12 +33,13 @@ export default {
           password: this.password
         })
         .then(response => {
-          // console.log('Response ', response)
+          console.log('Response ', response)
           const idToken = response.data.tokenUser
-          // console.log('Token ', idToken)
+          console.log('Token ', idToken)
 
           // Guardo el idToken en el localStorage
           localStorage.setItem('token', idToken)
+          localStorage.setItem('uid', response.data.uid)
 
           // Actualizar el estado de autenticacion
           this.$store.commit('SET_AUTH', { isloggedIn: true, idToken })
