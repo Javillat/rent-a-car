@@ -19,13 +19,20 @@ export default new Router({
     //   name: 'HelloWorld',
     //   component: HelloWorld
     // }
-    {path: '/', component: HomeComponent},
-    {path: '/login', component: LoginComponent},
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginComponent
+    },
     // {path: '/register', component: RegisterComponent},
-    {path: '/car', component: CarsComponent},
+    {
+      path: '/car',
+      name: 'Car',
+      component: CarsComponent},
     // {path: '/car/detail', component: CarDetailsComponent},
     {path: '/rent/:carId', component: RentalComponent},
-    {path: '/return/:rentalId', component: ReturnComponent}
+    {path: '/return/:rentalId', component: ReturnComponent},
+    {path: '/', name: 'Home', component: HomeComponent}
   // {path: '/logout', component: LogoutComponent},
   ]
 })
