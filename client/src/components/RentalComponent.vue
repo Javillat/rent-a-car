@@ -2,7 +2,7 @@
 <template>
     <div>
         <h2>Confirmar alquiler</h2>
-        <p>{{ car.marca }} - {{ car.tipo }} (Año {{ car.año }})</p>
+        <p>{{ car.marca }} </p> <p>{{ car.tipo }}</p> <p>(Año {{ car.año }})</p>
         <button @click="confirmRental">Confirmar alquiler</button>
     </div>
 </template>
