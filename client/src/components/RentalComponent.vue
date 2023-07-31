@@ -2,7 +2,7 @@
 <template>
     <div>
         <h2>Confirmar alquiler</h2>
-        <p>{{ car.marca }} - {{ car.modelo }} (Año {{ car.anyo }})</p>
+        <p>{{ car.marca }} - {{ car.tipo }} (Año {{ car.año }})</p>
         <button @click="confirmRental">Confirmar alquiler</button>
     </div>
 </template>
@@ -19,7 +19,7 @@ export default {
       const idToken = localStorage.getItem('idToken')
 
       this.$http
-        .post(`/rental/${this.$route.params.carId}`, null, {
+        .post(`/rental/${this.$route.params.carId}`, {
           headers: {'Authorization': `Bearer ${idToken}`}
         })
         .then(() => {
