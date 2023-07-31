@@ -16,11 +16,10 @@ addRentals = async (req, res) => {
          */
 
         const carId = req.params.carId;
-        const userId = req.user.uid;
+        //console.log('Request ',req);
+        const userId = req.user;
+        //console.log('UserId ', userId);
 
-        if (Object.keys(carId).length === 0) { //MODIFICAR
-            return res.sendStatus(204);
-        } else {
             //Verficar si el auto esta disponible para alquiler
             const carRef = db.collection('cars').doc(carId);
             const carDoc = await carRef.get();
@@ -35,7 +34,8 @@ addRentals = async (req, res) => {
             const rentalData = {
                 userId,
                 carId,
-                rentalDate: FieldValue.serverTimestamp,
+                //rentalDate: FieldValue.serverTimestamp,
+                rentalData: new Date(),
                 completed: false
             };
 
@@ -44,7 +44,6 @@ addRentals = async (req, res) => {
             //Actualizar estado del auto a ocupado y guardar cambios en base de datos.
             await carRef.update({available:false});
             return res.status(200).json({message:`Se creó la renta con id ${newRentalData}, correctamente`});
-        };
     } catch (error) {
         console.error("Error al agregar la renta: ", error.message);
         res.status(500).json({error: 'Error al realizar el alquiler.'});
@@ -59,7 +58,7 @@ addRentals = async (req, res) => {
 addReturnCar = async(req, res) => {
     try{
         const rentalId = req.params.rentalId;
-        const userId = req.user.uid;
+        const userId = req.user;
 
         //Verificar si el alquiler pertenece al usuario autenticado.
         const rentalRef = db.collection('rental').doc(rentalId);
@@ -78,7 +77,8 @@ addReturnCar = async(req, res) => {
 
         //Marcar el alquiler como completado y guardar la fecha de devolucion.
         await rentalRef.update({
-            returnDate:FieldValue.serverTimestamp(),
+            //returnDate:FieldValue.serverTimestamp(),
+            returnDate: new Date(),
             completed :true
         });
 
