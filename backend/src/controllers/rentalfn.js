@@ -117,9 +117,37 @@ getRentalList =  async (req, res) => {
     }
 }
 
+/**
+ * Obtener las rentas por usuario.
+ */
+
+getRentByUser = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        //userId = req.user['userId'];
+        console.log('Usuario uid', userId);
+        userRents = [];
+        const availableRef = db.collection('rental');
+        const snapshot = await availableRef.where('userId', '==', userId).get();
+        if(snapshot.empty){
+            return res.send('No hay rentas para el usuario');
+        }else{
+            snapshot.forEach(doc => {
+                userRents.push({idRent: doc.id, carId: doc.data().carId, completed: doc.data().completed, rentDate: doc.data().rentalData, userId: doc.data().userId.uid })
+            })
+        }
+        return res.status(200).json(userRents);
+        
+    } catch (error) {
+        console.error(error.message);
+    }
+
+}
+
 //Funciones exportadas
 module.exports = {
     addRentals,
     addReturnCar,
     getRentalList,
+    getRentByUser,
 }
