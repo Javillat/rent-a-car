@@ -1,13 +1,18 @@
 <template>
     <div>
-        <h2>Confirmar devolucion</h2>
-        <ul>
-            <li v-for="rent in cars" :key="rent.id">
-            <p>{{ rent.marca }}</p>
-            <p>{{ rent.tipo }}</p>
-            <p>(Año {{ rent.año }})</p>
-            <button @click="confirmReturn">Confirmar devolución</button>
-        </li></ul>
+        <div>
+            <h2>Confirmar devolucion</h2>
+        </div>
+        <div>
+            <ul>
+                <li v-for="rent in cars" :key="rent.id">
+                    <p>{{ rent.marca }}</p>
+                    <p>{{ rent.tipo }}</p>
+                    <p>(Año {{ rent.año }})</p>
+                    <button @click="confirmReturn">Confirmar devolución</button>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -24,7 +29,7 @@ export default {
       const idToken = localStorage.getItem('token')
       this.$http
         .post(`/rental/return/${this.$route.params.rentalId}`, null, {
-          headers: {'Authorization': `Bearer ${idToken}`}
+          headers: { 'Authorization': `Bearer ${idToken}` }
         })
         .then(() => {
           alert('Devolución registrada correctamente')
@@ -51,7 +56,7 @@ export default {
       console.log(idToken)
       this.$http
         .get('rental/allrental', {
-          headers: {'Authorization': `Bearer ${idToken}`}
+          headers: { 'Authorization': `Bearer ${idToken}` }
         })
         .then((response) => {
           this.cars = response.data
@@ -67,3 +72,11 @@ export default {
   }
 }
 </script>
+
+<style>
+ul {
+    list-style: none;
+    margin:0px;
+    padding:0px;
+}
+</style>
