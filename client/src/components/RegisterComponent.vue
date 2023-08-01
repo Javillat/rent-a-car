@@ -52,7 +52,7 @@ export default {
         .then((response) => {
           console.log(response)
           alert('Usuario registrado correctamente')
-          this.$router.push('/')
+          this.$router.push('/login')
         })
         .catch((error) => {
           console.log(error)
