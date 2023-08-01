@@ -107,10 +107,11 @@ getRentalList =  async (req, res) => {
             return res.json({message: 'No hay autos rentados'});
         }
         snapshot.forEach(doc => {
-            console.log(doc.id, '=>', doc.data() );
-            carRented.push(doc.data());
+            //console.log(doc.id, '=>', doc.data() );
+            carRented.push({id:doc.id, marca: doc.data().marca, tipo: doc.data().tipo, color: doc.data().color, disponible: doc.data().available, año: doc.data().anyo});
         });
-        return res.status(200).json({'rentals': carRented});
+        console.log(carRented);
+        return res.status(200).json(carRented);
     }catch(error){
         console.log(error);
     }
