@@ -24,7 +24,7 @@ addUser = async (req, res) => {
                 phoneNumber,
                 displayName,
                 photoURL: photoURL || "https://www.citypng.com/photo/20794/free-round-flat-male-portrait-avatar-user-icon-png",
-                disabled
+                disabled: disabled || false
             });
             //console.log(credencial);
             res.status(201).json({ message: "Usuario registrado satisfactoriamente con uid", uid: credencial.uid });
