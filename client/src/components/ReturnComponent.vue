@@ -1,8 +1,10 @@
 <template>
     <div>
         <h2>Confirmar devolucion</h2>
-        <p>{{ rental.car.marca }} - {{ rental.car.modelo }} (Año {{ rental.car.anyo }})</p>
-        <button @click="confirmReturn">Confirmar devolucion</button>
+        <p>{{ rental.car.marca }}</p>
+        <p>{{ rental.car.tipo }}</p>
+        <p>(Año {{ rental.car.año }})</p>
+        <button @click="confirmReturn">Confirmar devolución</button>
     </div>
 </template>
 
@@ -10,7 +12,8 @@
 export default {
   name: 'Return',
   data: () => ({
-    rental: {}
+    rental: {},
+    cars: []
   }),
   methods: {
     confirmReturn () {
@@ -41,8 +44,23 @@ export default {
         })
     }
   },
+  fetchRentedCars () {
+    const idToken = localStorage.getItem('idToken')
+
+    this.$http
+      .get('rental/allrental', {
+        headers: {'Authorization': `Bearer ${idToken}`}
+      })
+      .then((response) => {
+        this.cars = response.data
+        alert('Listado de autos rentados!')
+      })
+      .catch((error) => {
+        console.log('Error consultando los autos rentados:', error)
+      })
+  },
   mounted () {
-    this.fetchRental()
+    this.fetchRentedCars()
   }
 }
 </script>
