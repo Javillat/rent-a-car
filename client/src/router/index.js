@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
-// import RegisterComponent from '../components/RegisterComponent.vue';
+import RegisterComponent from '../components/RegisterComponent.vue'
 import LoginComponent from '../components/LoginComponent.vue'
 // import LogoutComponent from '../components/LogoutComponent.vue';
 import HomeComponent from '../components/HomeComponent.vue'
@@ -24,7 +24,11 @@ export default new Router({
       name: 'login',
       component: LoginComponent
     },
-    // {path: '/register', component: RegisterComponent},
+    {
+      path: '/register',
+      name: 'Register',
+      component: RegisterComponent
+    },
     {
       path: '/car',
       name: 'Car',
