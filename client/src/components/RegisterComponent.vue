@@ -13,12 +13,12 @@
             <br><br>
             <label for="email">
                 Email:
-                <input type="email" name="email" v-model="email" placeholder="tuemail@servidor.com">
+                <input type="email" name="email" v-model="email" placeholder="tuemail@servidor.com" required>
             </label>
             <br><br>
             <label for="password">
                 Password:
-                <input type="password" id="password" v-model="password" placeholder="Introduce password">
+                <input type="password" id="password" v-model="password" placeholder="Introduce password" required>
             </label>
             <br><br>
             <label for="phone">
