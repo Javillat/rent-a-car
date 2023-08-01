@@ -40,12 +40,13 @@ export default new Router({
       component: CarDetailComponent
     },
     {
-      path: '/rent/:carId',
+      path: '/rent',
       name: 'Rental',
       component: RentalComponent
     },
     {
-      path: '/return/:rentalId',
+      // path: '/return/:rentalId',
+      path: '/return',
       name: 'Return',
       component: ReturnComponent
     },
