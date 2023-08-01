@@ -13,7 +13,7 @@
             <br><br>
             <label for="email">
                 Email:
-                <input type="email" name="email" v-model="email" placeholder="<EMAIL>">
+                <input type="email" name="email" v-model="email" placeholder="tuemail@servidor.com">
             </label>
             <br><br>
             <label for="password">
@@ -23,7 +23,7 @@
             <br><br>
             <label for="phone">
                 Teléfono (opcional):
-                <input type="tel" id="phoneNumber" v-model="phone" placeholder="Número de teléfono" pattern="+[0-9]">
+                <input type="tel" id="phoneNumber" v-model="phone" placeholder="Número de teléfono">
             </label>
             <br><br>
             <button type="submit">Registrarse</button>
@@ -63,4 +63,6 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+
+</style>
