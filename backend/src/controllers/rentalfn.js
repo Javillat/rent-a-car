@@ -18,8 +18,8 @@ addRentals = async (req, res) => {
         const carId = req.params.carId;
         //console.log('Request ',req);
         const userId = req.user;
-        console.log('UserId ', userId);
-        console.log('UserId uid', userId.uid);
+        // console.log('UserId ', userId);
+        // console.log('UserId uid', userId.uid);
 
             //Verficar si el auto esta disponible para alquiler
             const carRef = db.collection('cars').doc(carId);
@@ -63,7 +63,7 @@ addRentals = async (req, res) => {
 addReturnCar = async(req, res) => {
     try{
         const rentalId = req.params.rentalId;
-        const userId = req.user;
+        const userId = req.user.uid;
 
         //Verificar si el alquiler pertenece al usuario autenticado.
         const rentalRef = db.collection('rental').doc(rentalId);
@@ -130,7 +130,7 @@ getRentByUser = async (req, res) => {
     try {
         const { userId } = req.params;
         //userId = req.user['userId'];
-        console.log('Usuario uid', userId);
+        //console.log('Usuario uid', userId);
         userRents = [];
         const availableRef = db.collection('rental');
         const snapshot = await availableRef.where('userId', '==', userId).get();
