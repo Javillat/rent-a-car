@@ -1,49 +1,70 @@
 <!-- eslint-disable vue/valid-template-root -->
 <template>
-    <div>
-        <h2>Confirmar alquiler</h2>
-        <p>{{ car.marca }} </p> <p>{{ car.tipo }}</p> <p>(Año {{ car.año }})</p>
-        <button @click="confirmRental">Confirmar alquiler</button>
-    </div>
+  <div>
+    <h2>Autos rentados</h2>
+    <ul>
+      <li v-for="rent in rents" :key="rent.idRent">
+        <p>{{ rent.marca }} </p>
+        <p>{{ rent.tipo }}</p>
+        <p>(Año {{ rent.año }})</p>
+        <button @click="returnCar(rent.idRent)">Devolver auto</button>
+      </li>
+    </ul>
+
+  </div>
 </template>
 
 <script>
 export default {
   name: 'Rental',
   data: () => ({
-    car: {}
+    rents: []
   }),
   methods: {
-    confirmRental () {
+    returnCar (rentId) {
+      console.log('Rent Id', rentId)
       // Obtener el idToken almacenado para incluirlo en la solicitud.
-      const idToken = localStorage.getItem('idToken')
-
+      const idToken = localStorage.getItem('token')
+      console.log(idToken)
       this.$http
-        .post(`/rental/${this.$route.params.carId}`, {
-          headers: {'Authorization': `Bearer ${idToken}`}
+        .post(`/rental/return/${rentId}`, null, {
+          headers: { 'Authorization': `Bearer ${idToken}` }
         })
         .then(() => {
-          alert('Alquiler confirmado!')
-          this.$router.push('/cars')
+          alert('Devolución confirmada!')
+          this.$router.push('/rent')
         })
         .catch((error) => {
           console.error(error)
-          alert('Error al confirmar el alquiler.')
+          alert('Error al confirmar la devolución.')
         })
     },
-    fetchCar () {
-      this.$http.get(`/cars/${this.$route.params.carId}`)
+    fetchRental () {
+      const idToken = localStorage.getItem('token')
+      const idUser = localStorage.getItem('uid')
+      console.log(idUser)
+      this.$http
+        .get(`/rental/auth/${idUser}`, {
+          headers: { 'Authorization': `Bearer ${idToken}` }
+        })
         .then(response => {
-          this.car = response.data
+          console.log('Response ', response.data)
+          this.rents = response.data
         })
         .catch((error) => {
           console.error(error)
-          alert('Ha ocurrido un error al obtener informacion del auto.')
+          alert('Ha ocurrido un error al obtener informacion de las rentas del usuario!.')
         })
     }
   },
   mounted () {
-    this.fetchCar()
+    this.fetchRental()
   }
 }
 </script>
+
+<style>
+ul {
+  list-style: none;
+}
+</style>
