@@ -18,11 +18,13 @@ addRentals = async (req, res) => {
         const carId = req.params.carId;
         //console.log('Request ',req);
         const userId = req.user;
-        //console.log('UserId ', userId);
+        console.log('UserId ', userId);
+        console.log('UserId uid', userId.uid);
 
             //Verficar si el auto esta disponible para alquiler
             const carRef = db.collection('cars').doc(carId);
             const carDoc = await carRef.get();
+            console.log('CarDoc ',carDoc);
             if(!carDoc.exists){
                 return res.status(404).json({error: 'El auto no existe.'});
             }
@@ -32,8 +34,11 @@ addRentals = async (req, res) => {
 
             // Crear el registro de alquiler en la coleccion rental.
             const rentalData = {
-                userId,
+                userId: userId.uid,
                 carId,
+                marca:carDoc.data().marca,
+                tipo:carDoc.data().tipo,
+                año:carDoc.data().anyo,
                 //rentalDate: FieldValue.serverTimestamp,
                 rentalData: new Date(),
                 completed: false
@@ -129,11 +134,18 @@ getRentByUser = async (req, res) => {
         userRents = [];
         const availableRef = db.collection('rental');
         const snapshot = await availableRef.where('userId', '==', userId).get();
+        //const snapshot = await availableRef.get();
         if(snapshot.empty){
             return res.send('No hay rentas para el usuario');
         }else{
             snapshot.forEach(doc => {
-                userRents.push({idRent: doc.id, carId: doc.data().carId, completed: doc.data().completed, rentDate: doc.data().rentalData, userId: doc.data().userId.uid })
+                userRents.push({
+                    idRent: doc.id, 
+                    carId: doc.data().carId, 
+                    completed: doc.data().completed, 
+                    rentDate: doc.data().rentalData, 
+                    userId: doc.data().userId 
+                })
             })
         }
         return res.status(200).json(userRents);
