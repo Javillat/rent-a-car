@@ -7,7 +7,8 @@
                 <div class="logo">Logo</div>
                 <div class="nav-items">
                     <div><router-link to="/car">Autos disponibles</router-link></div>
-                    <div><router-link to="/rent">Autos rentados</router-link></div>
+                    <div><router-link to="/rent">Rentados usuario</router-link></div>
+                    <div><router-link to="/rentall">Ver rentados global</router-link></div>
                 </div>
                 <div class="login-button">Login</div>
             </div>
@@ -44,22 +45,19 @@ export default {
 
 .nav-items {
     display: flex;
-    justify-content: center;
+    justify-content:center;
     align-items: center;
     list-style: none;
-    margin: 0;
-    padding: 0;
-
-    li {
-        padding: 0 10px;
-    }
+    text-decoration: none;
+    margin: 5px;
+    padding: 3px;
 }
 
 i {
     display: none;
 }
 
-// Mobile version - hidden hamburger menu
+/* Mobile version - hidden hamburger menu */
 @media screen and (max-width: 768px) {
     .nav-menu {
         padding-top: 10px;
