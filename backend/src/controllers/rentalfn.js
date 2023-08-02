@@ -141,7 +141,10 @@ getRentByUser = async (req, res) => {
             snapshot.forEach(doc => {
                 userRents.push({
                     idRent: doc.id, 
-                    carId: doc.data().carId, 
+                    carId: doc.data().carId,
+                    marca: doc.data().marca,
+                    tipo: doc.data().tipo,
+                    año: doc.data().año, 
                     completed: doc.data().completed, 
                     rentDate: doc.data().rentalData, 
                     userId: doc.data().userId 
