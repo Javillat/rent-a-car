@@ -1,15 +1,15 @@
 <template>
   <div class="target-container">
-    <div><h1>Lista de autos disponibles</h1></div>
     <div>
-      <ul>
-        <li v-for="car in cars" :key="car.id">
+      <h1>Lista de autos disponibles</h1>
+    <ul>
+      <li v-for="car in cars" :key="car.id">
           <div class="car-target">
             <p>{{ car.id }}</p>
             <h2>{{ car.marca }}</h2>
             <h3>{{ car.tipo }}</h3>
             <h3>( Año {{ car.año }} )</h3>
-            <button @click="fetchCarDertails(car.id)">Ver auto</button>
+            <!-- <button @click="fetchCarDertails(car.id)">Ver auto</button> -->
             <button @click="rentCar(car.id)">Alquilar</button>
           </div>
         </li>
@@ -23,10 +23,12 @@ export default {
   name: 'Cars',
   data: () => ({
     // Lista con los datos del auto.
-    cars: []
+    cars: [],
+    car: {}
   }),
   methods: {
-    fetchCarDertails (carId) {
+    fetchCarDertails (carId) { // Modificar, llamar al componente
+      // this.$router.push('/car/detail')
       const idToken = localStorage.getItem('token')
 
       this.$http
@@ -34,6 +36,7 @@ export default {
           headers: {'Authorization': `Bearer ${idToken}`}
         })
         .then((response) => {
+          this.car = response.data
           alert('Mostrando detalle de auto!')
           this.$router.push('/car/detail')
         })
@@ -104,5 +107,9 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  background: #a89d9d;
+  border-color: black;
+  border-radius: 10px;
 }
 </style>

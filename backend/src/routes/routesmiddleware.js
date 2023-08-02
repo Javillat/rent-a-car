@@ -20,8 +20,8 @@ routerMiddleware.post('/login', users.signinUser); // loguear usuario
 routerMiddleware.put('/logout', users.signoutUser);// Desloguear usuario
 
 //middleware rental
-routerMiddleware.post('/:carId', users.authenticate, rental.addRentals); 
-routerMiddleware.get('/auth/:userId', users.authenticate, rental.getRentByUser);               // Agregar una renta
+routerMiddleware.post('/:carId', users.authenticate, rental.addRentals);                // Agregar una renta
+routerMiddleware.get('/auth/:userId', users.authenticate, rental.getRentByUser);        // Obtener las rentas de un usuario       
 routerMiddleware.post('/return/:rentalId', users.authenticate, rental.addReturnCar);    // Rerornar un auto
 routerMiddleware.get('/allrental', users.authenticate, rental.getRentalList);           // Obtener autos rentados
 
