@@ -6,8 +6,8 @@
       <li v-for="rent in rents" :key="rent.idRent">
         <p>{{ rent.marca }} </p>
         <p>{{ rent.tipo }}</p>
-        <p>(Año {{ rent.año }})</p>
-        <p>{{ rent.completed }}</p>
+        <p>Año {{ rent.año }}</p>
+        <p>Devuelto: {{ rent.completed ? `Si` : `No`}}</p>
         <button v-bind:class="rent.completed ? 'completed' : 'nocompleted'" @click="returnCar(rent.idRent)">Devolver
           auto</button>
       </li>
@@ -34,7 +34,7 @@ export default {
         })
         .then(() => {
           alert('Devolución confirmada!')
-          this.$router.push('/rent')
+          this.$router.push('/car')
         })
         .catch((error) => {
           console.error(error)
@@ -73,6 +73,7 @@ ul {
 .completed {
   pointer-events: none;
   background-color: gray;
+  opacity: .65;
 }
 
 .nocompleted {

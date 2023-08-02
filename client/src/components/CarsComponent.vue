@@ -1,20 +1,20 @@
 <template>
   <div class="target-container">
-    <div>
+    <!-- <div>
       <h1>Lista de autos disponibles</h1>
+    </div> -->
+    <!-- <div class="car-target"> -->
     <ul>
       <li v-for="car in cars" :key="car.id">
-          <div class="car-target">
             <p>{{ car.id }}</p>
             <h2>{{ car.marca }}</h2>
             <h3>{{ car.tipo }}</h3>
             <h3>( Año {{ car.año }} )</h3>
             <!-- <button @click="fetchCarDertails(car.id)">Ver auto</button> -->
             <button @click="rentCar(car.id)">Alquilar</button>
-          </div>
-        </li>
-      </ul>
-    </div>
+          </li>
+        </ul>
+      <!-- </div> -->
   </div>
 </template>
 
@@ -97,7 +97,7 @@ ul {
   align-items: center;
   justify-content: center;
   margin-top:20px;
-  padding:15px;
+  padding:5px;
   background:#f9f9f9;
   border-radius:.3rem;
   box-shadow: rgba(68, 74, 81,.1),
@@ -107,9 +107,16 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   background: #a89d9d;
   border-color: black;
   border-radius: 10px;
+}
+li{
+  display: inline-block;
+  margin: 5px;
+  padding: 5px;
+  border: solid ipx #000;
+  border-radius: 5px;
+  background-color: cadetblue;
 }
 </style>
