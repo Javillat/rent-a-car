@@ -6,18 +6,21 @@
             <div class="nav-content" :class="this.showMobileMenu ? 'open-menu' : 'closed-menu'">
                 <div class="logo">Logo</div>
                 <div class="nav-items">
-                    <div class="nav-link"><router-link to="/addcar">Agregar auto</router-link></div>
-                    <div class="nav-link"><router-link to="/car">Autos disponibles</router-link></div>
-                    <div class="nav-link"><router-link to="/rent">Rentados x usuario</router-link></div>
-                    <div class="nav-link"><router-link to="/rentall">Ver rentados global</router-link></div>
+                    <!-- <div class="nav-link"><router-link active-class="active" to="/addcar">Agregar auto</router-link></div> -->
+                    <div class="nav-link"><router-link active-class="active" to="/car">Autos disponibles</router-link></div>
+                    <div class="nav-link"><router-link active-class="active" to="/rent">Rentados x usuario</router-link></div>
+                    <!-- <div class="nav-link"><router-link active-class="active" to="/rentall">Ver rentados global</router-link></div> -->
                 </div>
-                <div class="login-button">Login</div>
+                <div class="login-button">
+                    <button @click="login">Login</button>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+// const isActive = ({ isActive }) => `${isActive ? 'active' : ''}`;
 export default {
   data () {
     return {
@@ -27,6 +30,9 @@ export default {
   methods: {
     showMenu () {
       this.showMobileMenu = !this.showMobileMenu
+    },
+    login () {
+      this.$router.push('/login')
     }
   }
 }
@@ -58,8 +64,14 @@ export default {
     margin: 3px;
     padding: 5px;
     text-decoration: none;
+    font-size:.8rem;
     }
 
+.active {
+    border-bottom: solid 2px#f8f9f9 3px ;
+    color:#edf1f4!important;
+    background-color: brown;
+}
 i {
     display: none;
 }
