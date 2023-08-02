@@ -6,9 +6,10 @@
             <div class="nav-content" :class="this.showMobileMenu ? 'open-menu' : 'closed-menu'">
                 <div class="logo">Logo</div>
                 <div class="nav-items">
-                    <div><router-link to="/car">Autos disponibles</router-link></div>
-                    <div><router-link to="/rent">Rentados usuario</router-link></div>
-                    <div><router-link to="/rentall">Ver rentados global</router-link></div>
+                    <div class="nav-link"><router-link to="/addcar">Agregar auto</router-link></div>
+                    <div class="nav-link"><router-link to="/car">Autos disponibles</router-link></div>
+                    <div class="nav-link"><router-link to="/rent">Rentados x usuario</router-link></div>
+                    <div class="nav-link"><router-link to="/rentall">Ver rentados global</router-link></div>
                 </div>
                 <div class="login-button">Login</div>
             </div>
@@ -48,10 +49,16 @@ export default {
     justify-content:center;
     align-items: center;
     list-style: none;
-    text-decoration: none;
+    min-width: 60vw;
     margin: 5px;
     padding: 3px;
 }
+
+.nav-link {
+    margin: 3px;
+    padding: 5px;
+    text-decoration: none;
+    }
 
 i {
     display: none;
@@ -85,6 +92,8 @@ i {
 
     .nav-items {
         flex-direction: column;
+        justify-content: space-around;
+        align-self: center;
     }
 
     i {
