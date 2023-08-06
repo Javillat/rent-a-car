@@ -35,10 +35,35 @@
 
 <script>
 export default {
-    name: 'AddCar',
-    data() {
-        
-    },
+  name: 'AddCar',
+  data: () => ({
+    marca: '',
+    tipo: '',
+    color: '',
+    fullExtras: false,
+    available: true
+  }),
+  methods: {
+    addCar () {
+      this.$http
+        .post('/cars/newcar', {
+          marca: this.marca,
+          tipo: this.tipo,
+          color: this.color,
+          fullExtras: this.fullExtras,
+          disponible: this.available
+        })
+        .then(response => {
+          console.log('Success')
+          this.$router.push('/addcar')
+          alert('Se ha agregado correctamente')
+        })
+        .catch(error => {
+          console.log(error)
+          alert('Hubo un error al guardar la informacion!')
+        })
+    }
+  }
 }
 </script>
 
