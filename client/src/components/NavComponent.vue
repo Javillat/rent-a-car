@@ -6,7 +6,7 @@
             <div class="nav-content" :class="this.showMobileMenu ? 'open-menu' : 'closed-menu'">
                 <div class="logo">Logo</div>
                 <div class="nav-items">
-                    <!-- <div class="nav-link"><router-link active-class="active" to="/addcar">Agregar auto</router-link></div> -->
+                    <div class="nav-link"><router-link active-class="active" to="/addcar">Agregar auto</router-link></div>
                     <div class="nav-link"><router-link active-class="active" to="/car">Autos disponibles</router-link></div>
                     <div class="nav-link"><router-link active-class="active" to="/rent">Rentados x usuario</router-link></div>
                     <!-- <div class="nav-link"><router-link active-class="active" to="/rentall">Ver rentados global</router-link></div> -->
