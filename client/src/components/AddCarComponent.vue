@@ -114,7 +114,7 @@ div {
   width: auto;
   margin:auto ;
   padding :20px  15%;
-  background:#ffaa;
+  background:rgba(222, 222, 218, 0.667);
 }
 .addcar-form {
   display: flex;
@@ -130,6 +130,7 @@ div {
   padding: 20px;
   min-width: 40vw;
   min-height: 60vh;
+  border-radius: 4px;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-evenly;
