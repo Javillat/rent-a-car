@@ -26,6 +26,11 @@
             Color:
           </label>
             <input type="text" id="color" v-model="color" placeholder="Agregar color">
+          <label for="anyo">
+            Año:
+          </label>
+          <!-- <input type="number" min=1900 max={{ new Date().getFullYear() }}> -->
+          <input type="number" id="year" v-model="anyo">
           <label for="extras">
             Full Extras:
           </label>
@@ -48,23 +53,28 @@ export default {
     marca: '',
     tipo: '',
     color: '',
+    anyo: '',
     fullExtras: false,
     available: true
   }),
 
   methods: {
     addCar () {
+      const idToken = localStorage.getItem('token')
       this.$http
         .post('/cars/newcar', {
           marca: this.marca,
           tipo: this.tipo,
           color: this.color,
+          anyo: this.anyo,
           fullExtras: this.fullExtras,
-          disponible: this.available
+          available: this.available
+        }, {
+          headers: { 'Authorization': `Bearer ${idToken}` }
         })
         .then(response => {
           console.log('Success')
-          this.$router.push('/addcar')
+          this.$router.push('/car')
           alert('Se ha agregado correctamente')
         })
         .catch(error => {
@@ -77,7 +87,7 @@ export default {
 </script>
 
 <style>
-input[type=text], select {
+input[type=text],[type=number], select {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
